@@ -4,7 +4,7 @@ import Contents from "@/components/ui/Contents";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Layout hasSider style={{ minHeight: "100vh" }}>
+    <Layout hasSider>
       <Sidebar />
       <Contents>{children}</Contents>
     </Layout>

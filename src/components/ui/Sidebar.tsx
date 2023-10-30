@@ -12,6 +12,8 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import { sidebarItems } from "@/constants/sidebarItems";
+import { ENUM_USER_ROLES } from "@/constants/role";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -46,18 +48,40 @@ const items: MenuItem[] = [
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const role = ENUM_USER_ROLES.ADMIN;
+
   return (
     <Sider
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
+      width={280}
+      style={{
+        overflow: "auto",
+        height: "100vh",
+        position: "sticky",
+        left: 0,
+        top: 0,
+        bottom: 0,
+      }}
     >
-      <div className="demo-logo-vertical" />
+      <div
+        style={{
+          color: "white",
+          fontSize: "2rem",
+          textAlign: "center",
+          fontWeight: "bold",
+          margin: "1rem 0 1rem 0",
+        }}
+      >
+        UM Portal
+      </div>
       <Menu
         theme="dark"
         defaultSelectedKeys={["1"]}
         mode="inline"
-        items={items}
+        items={sidebarItems(role)}
       />
     </Sider>
   );

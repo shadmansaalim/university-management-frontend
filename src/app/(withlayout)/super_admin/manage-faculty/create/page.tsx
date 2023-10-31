@@ -1,19 +1,19 @@
 // Imports
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 
-const CreateStudentPage = () => {
+const CreateFacultyPage = () => {
   const base = "super_admin";
   return (
     <div>
       <UMBreadCrumb
         items={[
           { label: `${base}`, link: `/${base}` },
-          { label: "manage-student", link: `/${base}/manage-student` },
+          { label: "manage-faculty", link: `/${base}/manage-faculty` },
         ]}
       />
-      <h1>Create Students Page</h1>
+      <h1>Create Faculty Page</h1>
     </div>
   );
 };
 
-export default CreateStudentPage;
+export default CreateFacultyPage;

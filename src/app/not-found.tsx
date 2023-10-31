@@ -1,6 +1,6 @@
 // Imports
 import Image from "next/image";
-import notFoundImage from "../assets/404.png";
+import notFoundImage from "../assets/not-found-image.png";
 import { HomeOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Link from "antd/es/typography/Link";

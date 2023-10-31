@@ -5,12 +5,14 @@ import { Layout, Menu } from "antd";
 import { useState } from "react";
 const { Sider } = Layout;
 import { sidebarItems } from "@/constants/sidebarItems";
-import { ENUM_USER_ROLES } from "@/constants/role";
+import { getUserInfo } from "@/services/auth.service";
+import { IUserDecodedTokenData } from "@/types";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const role = ENUM_USER_ROLES.ADMIN;
+  // User Role
+  const { role } = getUserInfo() as IUserDecodedTokenData;
 
   return (
     <Sider
@@ -36,7 +38,7 @@ const Sidebar = () => {
           margin: "1rem 0 1rem 0",
         }}
       >
-        UM Portal
+        UMS
       </div>
       <Menu
         theme="dark"

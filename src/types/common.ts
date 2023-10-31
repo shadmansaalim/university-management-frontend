@@ -19,3 +19,10 @@ export type IGenericErrorMessage = {
   path: string | number;
   message: string;
 };
+
+export type IUserDecodedTokenData = {
+  id: string;
+  role: string;
+  iat: number;
+  exp: number;
+};

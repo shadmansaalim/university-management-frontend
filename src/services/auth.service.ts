@@ -1,5 +1,6 @@
 // Imports
 import { authKey } from "@/constants/storageKey";
+import { IUserDecodedTokenData } from "@/types";
 import { decodedToken } from "@/utils/jwt";
 import { LocalStorageUtils } from "@/utils/local-storage";
 
@@ -7,7 +8,7 @@ export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {
   return LocalStorageUtils.set(authKey, accessToken);
 };
 
-export const getUserInfo = () => {
+export const getUserInfo = (): IUserDecodedTokenData | string => {
   const authToken = LocalStorageUtils.get(authKey);
   if (authToken) {
     const decodedData = decodedToken(authToken);

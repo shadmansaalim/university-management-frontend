@@ -33,7 +33,7 @@ const NotFoundPage = () => {
           icon={<HomeOutlined />}
           size="large"
         >
-          <Link href="/profile">Home</Link>
+          <Link href="/">Home</Link>
         </Button>
       </div>
     </div>

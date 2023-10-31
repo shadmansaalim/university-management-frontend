@@ -6,6 +6,7 @@ import { getUserInfo } from "@/services/auth.service";
 import { IUserDecodedTokenData } from "@/types";
 import { Button } from "antd";
 import Link from "next/link";
+import ActionBar from "@/components/ui/ActionBar";
 
 const ManageDepartmentPage = () => {
   const { role } = getUserInfo() as IUserDecodedTokenData;
@@ -20,10 +21,12 @@ const ManageDepartmentPage = () => {
           },
         ]}
       />
-      <h1>Department List</h1>
-      <Link href="/super_admin/department/create">
-        <Button type="primary">Create Department</Button>
-      </Link>
+
+      <ActionBar title="Department List">
+        <Link href="/super_admin/department/create">
+          <Button type="primary">Create Department</Button>
+        </Link>
+      </ActionBar>
     </div>
   );
 };

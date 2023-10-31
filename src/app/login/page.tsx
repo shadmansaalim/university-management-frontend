@@ -25,12 +25,12 @@ const LoginPage = () => {
       const res = await userLogin({ ...data }).unwrap();
 
       // Redirecting to profile page
-      if (res?.data?.accessToken) {
+      if (res?.accessToken) {
         router.push("/profile");
       }
 
       // Storing user access token in to keep user authenticated
-      storeUserInfo({ accessToken: res?.data?.accessToken });
+      storeUserInfo({ accessToken: res?.accessToken });
     } catch (err) {
       console.error(err.message);
     }

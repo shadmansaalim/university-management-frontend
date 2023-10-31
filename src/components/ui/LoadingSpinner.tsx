@@ -1,10 +1,19 @@
+// Imports
+import { Row, Space, Spin } from "antd";
+
 const LoadingSpinner = () => {
   return (
-    <div className="spinner">
-      <div className="bounce1"></div>
-      <div className="bounce2"></div>
-      <div className="bounce3"></div>
-    </div>
+    <Row
+      justify="center"
+      align="middle"
+      style={{
+        height: "100vh",
+      }}
+    >
+      <Space>
+        <Spin tip="Loading" size="large"></Spin>
+      </Space>
+    </Row>
   );
 };
 

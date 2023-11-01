@@ -31,7 +31,7 @@ const CreateStudentPage = () => {
     },
   ];
 
-  const handleStudentSubmit = async (data: any) => {
+  const handleCreateStudent = async (data: any) => {
     try {
       console.log(data);
     } catch (err) {
@@ -51,7 +51,7 @@ const CreateStudentPage = () => {
       <h1 style={{ margin: "12px 0px" }}>Create Students</h1>
       <StepperForm
         submitHandler={(value) => {
-          handleStudentSubmit(value);
+          handleCreateStudent(value);
         }}
         steps={steps}
       />

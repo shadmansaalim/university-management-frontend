@@ -21,7 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const CreateAdminPage = () => {
   const base = "super_admin";
 
-  const onSubmit = async (data: any) => {
+  const handleCreateAdmin = async (data: any) => {
     try {
       console.log(data);
     } catch (err: any) {
@@ -41,7 +41,7 @@ const CreateAdminPage = () => {
       <h1 style={{ margin: "12px 0px" }}>Create Admin</h1>
       <div>
         <Form
-          submitHandler={onSubmit}
+          submitHandler={handleCreateAdmin}
           resolver={yupResolver(createAdminSchema)}
         >
           <div

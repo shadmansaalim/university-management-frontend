@@ -1,3 +1,18 @@
+// Genders
+export const gendersData = ["male", "female"];
+
+// Blood Group
+export const bloodGroupData = [
+  "A+",
+  "A-",
+  "B+",
+  "B-",
+  "AB+",
+  "AB-",
+  "O+",
+  "O-",
+];
+
 export const genderOptions = [
   {
     label: "Male",

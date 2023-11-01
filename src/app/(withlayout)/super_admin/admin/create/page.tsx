@@ -16,7 +16,7 @@ import UploadImage from "../../../../../components/ui/UploadImage";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { createAdminSchema } from "@/schemas/admin";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const CreateAdminPage = () => {
   const base = "super_admin";
@@ -42,7 +42,7 @@ const CreateAdminPage = () => {
       <div>
         <Form
           submitHandler={handleCreateAdmin}
-          resolver={yupResolver(createAdminSchema)}
+          resolver={zodResolver(createAdminSchema)}
         >
           <div
             style={{

@@ -4,7 +4,7 @@
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
 import { IMeta, IUserDecodedTokenData } from "@/types";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import Link from "next/link";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
@@ -21,11 +21,13 @@ const ManageDepartmentPage = () => {
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["searchTerm"] = searchTerm;
 
   const { data, isLoading } = useDepartmentsQuery({ ...query });
 
@@ -52,7 +54,7 @@ const ManageDepartmentPage = () => {
             <Link href={`/super_admin/department/edit/${data?.id}`}>
               <Button
                 style={{
-                  margin: "0px 5px",
+                  margin: "0px  5px 0px 0px",
                 }}
                 onClick={() => console.log(data)}
                 type="primary"
@@ -93,6 +95,15 @@ const ManageDepartmentPage = () => {
         ]}
       />
       <ActionBar title="Department List">
+        <Input
+          type="text"
+          size="large"
+          placeholder="Search Department"
+          style={{
+            width: "20%",
+          }}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         <Link href="/super_admin/department/create">
           <Button type="primary">Create Department</Button>
         </Link>

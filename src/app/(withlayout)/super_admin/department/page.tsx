@@ -3,63 +3,83 @@
 // Imports
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
-import { IUserDecodedTokenData } from "@/types";
+import { IMeta, IUserDecodedTokenData } from "@/types";
 import { Button } from "antd";
 import Link from "next/link";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
-import { DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useDepartmentsQuery } from "@/redux/api/departmentApi";
+import { useState } from "react";
 
 const ManageDepartmentPage = () => {
   const { role } = getUserInfo() as IUserDecodedTokenData;
 
+  const query: Record<string, any> = {};
+
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+
+  const { data, isLoading } = useDepartmentsQuery({ ...query });
+
+  const departments = data?.departments;
+  const meta = data?.meta as IMeta;
+
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      sorter: (a: any, b: any) => a.age - b.age,
+      title: "CreatedAt",
+      dataIndex: "createdAt",
+      sorter: true,
+      key: "createdAt",
     },
     {
       title: "Action",
       render: function (data: any) {
         return (
-          <Button onClick={() => console.log(data)} type="primary" danger>
-            <DeleteOutlined />
-          </Button>
+          <>
+            <Link href={`/super_admin/department/edit/${data?.id}`}>
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                onClick={() => console.log(data)}
+                type="primary"
+              >
+                <EditOutlined />
+              </Button>
+            </Link>
+            <Button type="primary" danger>
+              <DeleteOutlined />
+            </Button>
+          </>
         );
       },
-    },
-  ];
-
-  const tableData = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
+      key: "action",
     },
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log(page, pageSize);
+    setPage(page);
+    setSize(pageSize);
   };
 
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
-    console.log(pagination);
-    console.log(filter);
-    console.log(sorter);
-
     const { field, order } = sorter;
+
+    setSortBy(field as string);
+    setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
   return (
@@ -79,11 +99,11 @@ const ManageDepartmentPage = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
-        dataSource={tableData}
-        pageSize={5}
-        totalPages={10}
+        dataSource={departments}
+        pageSize={size}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

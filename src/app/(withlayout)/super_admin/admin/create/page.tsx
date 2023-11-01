@@ -15,6 +15,8 @@ import { Button } from "antd";
 import UploadImage from "../../../../../components/ui/UploadImage";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import { createAdminSchema } from "@/schemas/admin";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const CreateAdminPage = () => {
   const base = "super_admin";
@@ -38,7 +40,10 @@ const CreateAdminPage = () => {
 
       <h1 style={{ margin: "12px 0px" }}>Create Admin</h1>
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form
+          submitHandler={onSubmit}
+          resolver={yupResolver(createAdminSchema)}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",

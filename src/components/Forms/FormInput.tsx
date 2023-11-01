@@ -3,6 +3,7 @@
 // Imports
 import { Input } from "antd";
 import { useFormContext, Controller } from "react-hook-form";
+import { getErrorMessageByPropertyName } from "../../utils/schema-validator";
 
 // Types
 interface IInput {
@@ -26,7 +27,12 @@ const FormInput = ({
   validation,
   label,
 }: IInput) => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  const errorMessage = getErrorMessageByPropertyName(errors, name);
 
   return (
     <>
@@ -54,6 +60,7 @@ const FormInput = ({
           )
         }
       />
+      <small style={{ color: "#e76f51" }}>{errorMessage}</small>
     </>
   );
 };

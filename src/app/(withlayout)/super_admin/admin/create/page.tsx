@@ -68,7 +68,6 @@ const CreateAdminPage = () => {
                   name="admin.name.firstName"
                   size="large"
                   label="First Name"
-                  required={true}
                 />
               </Col>
               <Col
@@ -83,7 +82,6 @@ const CreateAdminPage = () => {
                   name="admin.name.middleName"
                   size="large"
                   label="Middle Name"
-                  required={false}
                 />
               </Col>
               <Col
@@ -98,7 +96,6 @@ const CreateAdminPage = () => {
                   name="admin.name.lastName"
                   size="large"
                   label="Last Name"
-                  required={true}
                 />
               </Col>
               <Col
@@ -113,7 +110,6 @@ const CreateAdminPage = () => {
                   name="password"
                   size="large"
                   label="Password"
-                  required={false}
                 />
               </Col>
               <Col
@@ -194,7 +190,6 @@ const CreateAdminPage = () => {
                   name="admin.email"
                   size="large"
                   label="Email address"
-                  required={true}
                 />
               </Col>
               <Col
@@ -209,7 +204,6 @@ const CreateAdminPage = () => {
                   name="admin.contactNo"
                   size="large"
                   label="Contact No."
-                  required={true}
                 />
               </Col>
               <Col
@@ -224,7 +218,6 @@ const CreateAdminPage = () => {
                   name="admin.emergencyContactNo"
                   size="large"
                   label="Emergency Contact No."
-                  required={true}
                 />
               </Col>
               <Col

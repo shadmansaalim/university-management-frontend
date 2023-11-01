@@ -14,7 +14,6 @@ interface IInput {
   placeholder?: string;
   validation?: object;
   label?: string;
-  required?: boolean;
 }
 
 const FormInput = ({
@@ -26,7 +25,6 @@ const FormInput = ({
   placeholder,
   validation,
   label,
-  required,
 }: IInput) => {
   const { control } = useFormContext();
 
@@ -44,7 +42,6 @@ const FormInput = ({
               placeholder={placeholder}
               {...field}
               value={value ? value : field.value}
-              required={required}
             />
           ) : (
             <Input
@@ -53,7 +50,6 @@ const FormInput = ({
               placeholder={placeholder}
               {...field}
               value={value ? value : field.value}
-              required={required}
             />
           )
         }

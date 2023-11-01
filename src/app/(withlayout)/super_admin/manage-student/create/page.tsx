@@ -50,7 +50,9 @@ const CreateStudentPage = () => {
 
       <h1 style={{ margin: "12px 0px" }}>Create Students</h1>
       <StepperForm
-        submitHandler={(value) => handleStudentSubmit(value)}
+        submitHandler={(value) => {
+          handleStudentSubmit(value);
+        }}
         steps={steps}
       />
     </div>

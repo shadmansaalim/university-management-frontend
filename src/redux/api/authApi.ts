@@ -1,4 +1,5 @@
 // Imports
+import { TAG_TYPES } from "../tag-types";
 import { baseApi } from "./baseApi";
 
 // Constant for this api routes
@@ -12,7 +13,7 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         data: loginData,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: [TAG_TYPES.user],
     }),
   }),
 });

@@ -4,16 +4,23 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Col, Row } from "antd";
+import { Button, Col, message, Row } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createManagementDepartmentSchema } from "@/schemas/department";
+import { useAddDepartmentMutation } from "@/redux/api/departmentApi";
 
 const CreateDepartmentPage = () => {
+  const [addDepartment] = useAddDepartmentMutation();
+
   const onSubmit = async (data: any) => {
+    message.loading("Creating ...");
     try {
-      console.log(data);
+      const res = await addDepartment({ ...data }).unwrap();
+      console.log(res);
+      message.success("Department added successfully.");
     } catch (err: any) {
       console.error(err.message);
+      message.error(err.message);
     }
   };
   const base = "super_admin";

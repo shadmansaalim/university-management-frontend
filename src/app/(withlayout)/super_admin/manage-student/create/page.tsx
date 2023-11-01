@@ -7,6 +7,8 @@ import StudentInfo from "@/components/StudentForms/StudentInfo";
 import BasicInfo from "../../../../../components/StudentForms/BasicInfo";
 import GuardianInfo from "../../../../../components/StudentForms/GuardianInfo";
 import LocalGuardianInfo from "../../../../../components/StudentForms/LocalGuardianInfo";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createStudentSchema } from "../../../../../schemas/student";
 
 const CreateStudentPage = () => {
   const base = "super_admin";

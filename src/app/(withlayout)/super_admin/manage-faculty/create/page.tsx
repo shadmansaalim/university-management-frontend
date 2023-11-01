@@ -10,6 +10,8 @@ import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
 import { Button, Col, Row } from "antd";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createFacultySchema } from "../../../../../schemas/faculty";
 
 const CreateFacultyPage = () => {
   const departmentOptions = [
@@ -45,7 +47,10 @@ const CreateFacultyPage = () => {
         ]}
       />
       <h1>Create Faculty</h1>
-      <Form submitHandler={handleCreateFaculty}>
+      <Form
+        submitHandler={handleCreateFaculty}
+        resolver={zodResolver(createFacultySchema)}
+      >
         <div
           style={{
             border: "1px solid #d9d9d9",

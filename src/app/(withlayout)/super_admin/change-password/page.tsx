@@ -4,6 +4,8 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { Button } from "antd";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { changePasswordSchema } from "../../../../schemas/profile";
 
 const ResetPasswordPage = () => {
   const onSubmit = async (data: any) => {
@@ -18,7 +20,10 @@ const ResetPasswordPage = () => {
     <div
       style={{ margin: "100px 0", display: "flex", justifyContent: "center" }}
     >
-      <Form submitHandler={onSubmit}>
+      <Form
+        submitHandler={onSubmit}
+        resolver={zodResolver(changePasswordSchema)}
+      >
         <h3 style={{ marginBottom: "10px" }}>Reset Password</h3>
         <div style={{ margin: "5px 0" }}>
           <FormInput name="oldPassword" label="Old password" type="password" />

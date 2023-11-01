@@ -15,8 +15,7 @@ const CreateDepartmentPage = () => {
   const onSubmit = async (data: any) => {
     message.loading("Creating ...");
     try {
-      const res = await addDepartment({ ...data }).unwrap();
-      console.log(res);
+      await addDepartment(data);
       message.success("Department added successfully.");
     } catch (err: any) {
       console.error(err.message);
@@ -24,6 +23,7 @@ const CreateDepartmentPage = () => {
     }
   };
   const base = "super_admin";
+
   return (
     <div>
       <UMBreadCrumb

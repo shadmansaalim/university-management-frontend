@@ -1,7 +1,7 @@
 "use client";
 
 // Imports
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, message } from "antd";
 import loginImage from "../../assets/login-image.png";
 import Image from "next/image";
 import Form from "@/components/Forms/Form";
@@ -27,6 +27,7 @@ const Login = () => {
       // Redirecting to profile page
       if (res?.accessToken) {
         router.push("/profile");
+        message.success("Welcome Back to UMS Portal");
       }
 
       // Storing user access token in to keep user authenticated

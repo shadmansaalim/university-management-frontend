@@ -1,6 +1,13 @@
 // Genders
 export const gendersData = ["male", "female"];
 
+export const genderOptions = gendersData?.map((gender) => {
+  return {
+    label: gender.charAt(0).toUpperCase() + gender.slice(1),
+    value: gender,
+  };
+});
+
 // Blood Group
 export const bloodGroupData = [
   "A+",
@@ -13,65 +20,12 @@ export const bloodGroupData = [
   "O-",
 ];
 
-export const genderOptions = [
-  {
-    label: "Male",
-    value: "male",
-  },
-  {
-    label: "Female",
-    value: "female",
-  },
-];
-export const departmentOptions = [
-  {
-    label: "HR",
-    value: "hr manager",
-  },
-  {
-    label: "Finance",
-    value: "finance",
-  },
-  {
-    label: "Management",
-    value: "management",
-  },
-];
-
-export const bloodGroupOptions = [
-  {
-    label: "A+",
-    value: "A+",
-  },
-  {
-    label: "A-",
-    value: "A-",
-  },
-  {
-    label: "B+",
-    value: "B+",
-  },
-  {
-    label: "B-",
-    value: "B-",
-  },
-  {
-    label: "AB+",
-    value: "AB+",
-  },
-  {
-    label: "AB-",
-    value: "AB-",
-  },
-  {
-    label: "O+",
-    value: "O+",
-  },
-  {
-    label: "O-",
-    value: "O-",
-  },
-];
+export const bloodGroupOptions = bloodGroupData?.map((group) => {
+  return {
+    label: group,
+    value: group,
+  };
+});
 
 export const facultyOptions = [
   {

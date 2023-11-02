@@ -178,7 +178,7 @@ const CreateAdminPage = () => {
                     >
                       Profile Image
                     </p>
-                    <UploadImage />
+                    <UploadImage name="file" />
                   </Col>
                 </Row>
               </div>

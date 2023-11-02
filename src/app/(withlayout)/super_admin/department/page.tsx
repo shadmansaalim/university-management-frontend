@@ -4,7 +4,7 @@
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
 import { IMeta, IUserDecodedTokenData } from "@/types";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
@@ -13,9 +13,13 @@ import {
   DeleteOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { useDepartmentsQuery } from "@/redux/api/departmentApi";
+import {
+  useDeleteDepartmentMutation,
+  useDepartmentsQuery,
+} from "@/redux/api/departmentApi";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
+import dayjs from "dayjs";
 
 const ManageDepartmentPage = () => {
   // User Role
@@ -27,6 +31,8 @@ const ManageDepartmentPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const [deleteDepartment] = useDeleteDepartmentMutation();
 
   // API call departments query
   const query: Record<string, any> = {};
@@ -52,6 +58,19 @@ const ManageDepartmentPage = () => {
   const departments = data?.departments;
   const meta = data?.meta as IMeta;
 
+  // Function to delete department
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting ...");
+    try {
+      //   console.log(data);
+      await deleteDepartment(id);
+      message.success("Department Deleted successfully");
+    } catch (err: any) {
+      //   console.error(err.message);
+      message.error(err.message);
+    }
+  };
+
   // Table columns
   const columns = [
     {
@@ -62,6 +81,9 @@ const ManageDepartmentPage = () => {
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
       sorter: true,
       key: "createdAt",
     },
@@ -75,13 +97,16 @@ const ManageDepartmentPage = () => {
                 style={{
                   marginRight: "5px",
                 }}
-                onClick={() => console.log(data)}
                 type="primary"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button type="primary" danger>
+            <Button
+              onClick={() => deleteHandler(data?.id)}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </>

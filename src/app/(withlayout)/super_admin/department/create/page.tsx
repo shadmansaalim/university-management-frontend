@@ -43,7 +43,7 @@ const CreateDepartmentPage = () => {
           </Col>
         </Row>
         <Button type="primary" htmlType="submit">
-          add
+          Create
         </Button>
       </Form>
     </div>

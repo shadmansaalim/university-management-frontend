@@ -1,4 +1,3 @@
-import { bloodGroupData, gendersData } from "@/constants/global";
 import * as z from "zod";
 
 export const createAdminSchema = z.object({
@@ -13,7 +12,7 @@ export const createAdminSchema = z.object({
         required_error: "Last Name is required",
       }),
     }),
-    gender: z.enum([...gendersData] as [string, ...string[]], {
+    gender: z.string({
       required_error: "Gender is required",
     }),
     dateOfBirth: z.string({
@@ -30,7 +29,7 @@ export const createAdminSchema = z.object({
     emergencyContactNo: z.string({
       required_error: "Emergency contact number is required",
     }),
-    bloodGroup: z.enum([...bloodGroupData] as [string, ...string[]]).optional(),
+    bloodGroup: z.string().optional(),
     presentAddress: z.string({
       required_error: "Present address is required",
     }),
@@ -43,6 +42,5 @@ export const createAdminSchema = z.object({
     managementDepartment: z.string({
       required_error: "Management department is required",
     }),
-    profileImage: z.string().optional(),
   }),
 });

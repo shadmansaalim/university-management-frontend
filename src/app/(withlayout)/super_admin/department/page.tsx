@@ -2,8 +2,7 @@
 
 // Imports
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { getUserInfo } from "@/services/auth.service";
-import { IMeta, IUserDecodedTokenData } from "@/types";
+import { IMeta } from "@/types";
 import { Button, Input, message } from "antd";
 import Link from "next/link";
 import ActionBar from "@/components/ui/ActionBar";
@@ -22,9 +21,6 @@ import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
 
 const ManageDepartmentPage = () => {
-  // User Role
-  const { role } = getUserInfo() as IUserDecodedTokenData;
-
   // States
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -142,8 +138,8 @@ const ManageDepartmentPage = () => {
       <UMBreadCrumb
         items={[
           {
-            label: `${role}`,
-            link: `/${role}`,
+            label: "super_admin",
+            link: "/super_admin",
           },
         ]}
       />

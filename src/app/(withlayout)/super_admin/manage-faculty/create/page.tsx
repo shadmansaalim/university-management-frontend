@@ -37,13 +37,12 @@ const CreateFacultyPage = () => {
     }
   };
 
-  const base = "super_admin";
   return (
     <>
       <UMBreadCrumb
         items={[
-          { label: `${base}`, link: `/${base}` },
-          { label: "manage-faculty", link: `/${base}/manage-faculty` },
+          { label: "super_admin", link: "/super_admin" },
+          { label: "manage-faculty", link: "/super_admin/manage-faculty" },
         ]}
       />
       <h1>Create Faculty</h1>
@@ -120,7 +119,7 @@ const CreateFacultyPage = () => {
             </Col>
 
             <Col span={8} style={{ margin: "10px 0" }}>
-              <UploadImage />
+              <UploadImage name="file" />
             </Col>
           </Row>
         </div>

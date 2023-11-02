@@ -3,11 +3,10 @@
 // Imports
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import Form from "@/components/Forms/Form";
-import { Row, Col } from "antd";
+import { Button, Col, Row, message } from "antd";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "../../../../../components/Forms/FormSelectField";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { Button } from "antd";
 import UploadImage from "../../../../../components/ui/UploadImage";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormTextArea from "@/components/Forms/FormTextArea";
@@ -16,9 +15,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDepartmentsQuery } from "@/redux/api/departmentApi";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { IDepartment } from "@/types";
+import { useAddAdminWithFormDataMutation } from "@/redux/api/adminApi";
 
 const CreateAdminPage = () => {
   const { data, isLoading } = useDepartmentsQuery({ limit: 100, page: 1 });
+  const [addAdminWithFormData] = useAddAdminWithFormDataMutation();
 
   // All departments
   const departments = data?.departments as IDepartment[];
@@ -32,11 +33,26 @@ const CreateAdminPage = () => {
       };
     });
 
-  const base = "super_admin";
+  const handleCreateAdmin = async (values: any) => {
+    // Destructuring
+    const obj = { ...values };
 
-  const handleCreateAdmin = async (data: any) => {
+    // Getting the file and storing and then deleting from obj
+    const file = obj["file"];
+    delete obj["file"];
+
+    // Stringify JSON object
+    const data = JSON.stringify(obj);
+
+    const formData = new FormData();
+
+    formData.append("file", file as Blob);
+    formData.append("data", data);
+
+    message.loading("Creating ...");
     try {
-      console.log(data);
+      await addAdminWithFormData(formData);
+      message.success("Admin created successfully.");
     } catch (err: any) {
       console.error(err.message);
     }
@@ -50,8 +66,8 @@ const CreateAdminPage = () => {
         <div>
           <UMBreadCrumb
             items={[
-              { label: `${base}`, link: `/${base}` },
-              { label: "admin", link: `/${base}/admin` },
+              { label: "super_admin", link: "/super_admin" },
+              { label: "admin", link: "/super_admin/admin" },
             ]}
           />
 

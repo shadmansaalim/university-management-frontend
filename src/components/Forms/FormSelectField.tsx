@@ -24,7 +24,7 @@ const FormSelectField = ({
   name,
   size = "large",
   value,
-  placeholder = "select",
+  placeholder = "Select",
   options,
   label,
   defaultValue,

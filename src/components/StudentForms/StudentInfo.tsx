@@ -5,12 +5,10 @@ import { Col, Row } from "antd";
 import FormInput from "../Forms/FormInput";
 import FormSelectField from "../Forms/FormSelectField";
 import UploadImage from "../ui/UploadImage";
-import {
-  academicDepartmentOptions,
-  academicSemesterOptions,
-  facultyOptions,
-  genderOptions,
-} from "@/constants/global";
+import AcademicDepartmentField from "@/components/Forms/AcademicDepartmentField";
+import AcademicFacultyField from "@/components/Forms/AcademicFacultyField";
+import AcademicSemesterField from "@/components/Forms/AcademicSemesterField";
+import { genderOptions } from "@/constants/global";
 
 const StudentInfo = () => {
   return (
@@ -87,12 +85,9 @@ const StudentInfo = () => {
             marginBottom: "10px",
           }}
         >
-          <FormSelectField
-            size="large"
+          <AcademicDepartmentField
             name="student.academicDepartment"
-            options={academicDepartmentOptions}
             label="Academic Department"
-            placeholder="Select"
           />
         </Col>
         <Col
@@ -102,12 +97,9 @@ const StudentInfo = () => {
             marginBottom: "10px",
           }}
         >
-          <FormSelectField
-            size="large"
+          <AcademicFacultyField
             name="student.academicFaculty"
-            options={facultyOptions}
             label="Academic Faculty"
-            placeholder="Select"
           />
         </Col>
         <Col
@@ -117,12 +109,9 @@ const StudentInfo = () => {
             marginBottom: "10px",
           }}
         >
-          <FormSelectField
-            size="large"
+          <AcademicSemesterField
             name="student.academicSemester"
-            options={academicSemesterOptions}
             label="Academic Semester"
-            placeholder="Select"
           />
         </Col>
         <Col
@@ -147,7 +136,7 @@ const StudentInfo = () => {
             marginBottom: "10px",
           }}
         >
-          <UploadImage />
+          <UploadImage name="file" />
         </Col>
       </Row>
     </div>

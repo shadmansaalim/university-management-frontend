@@ -13,14 +13,14 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 import {
-  useAcademicFacultiesQuery,
-  useDeleteAcademicFacultyMutation,
-} from "@/redux/api/academic/facultyApi";
+  useAcademicDepartmentsQuery,
+  useDeleteAcademicDepartmentMutation,
+} from "@/redux/api/academic/departmentApi";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
 
-const AcademicFacultyPage = () => {
+const AcademicDepartmentPage = () => {
   // States
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -28,7 +28,7 @@ const AcademicFacultyPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const [deleteAcademicFaculty] = useDeleteAcademicFacultyMutation();
+  const [deleteAcademicDepartment] = useDeleteAcademicDepartmentMutation();
 
   // API call query
   const query: Record<string, any> = {};
@@ -48,19 +48,19 @@ const AcademicFacultyPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  // Getting all academic faculties
-  const { data, isLoading } = useAcademicFacultiesQuery({ ...query });
+  // Getting all academic departments
+  const { data, isLoading } = useAcademicDepartmentsQuery({ ...query });
 
-  const academicFaculties = data?.academicFaculties;
+  const academicDepartments = data?.academicDepartments;
   const meta = data?.meta as IMeta;
 
-  // Function to delete academic faculty
+  // Function to delete academic department
   const deleteHandler = async (id: string) => {
     message.loading("Deleting ...");
     try {
-      const res = await deleteAcademicFaculty(id);
+      const res = await deleteAcademicDepartment(id);
       if (res) {
-        message.success("Academic Faculty Deleted successfully");
+        message.success("Academic Department Deleted successfully");
       }
     } catch (err: any) {
       message.error(err.message);
@@ -73,6 +73,13 @@ const AcademicFacultyPage = () => {
       title: "Title",
       dataIndex: "title",
       key: "title",
+    },
+    {
+      title: "Academic Faculty",
+      dataIndex: "academicFaculty",
+      render: function (data: any) {
+        return <>{data?.title}</>;
+      },
     },
     {
       title: "CreatedAt",
@@ -88,7 +95,7 @@ const AcademicFacultyPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/academic/faculty/edit/${data?.id}`}>
+            <Link href={`/admin/academic/department/edit/${data?.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -144,22 +151,28 @@ const AcademicFacultyPage = () => {
           },
         ]}
       />
-      <ActionBar title="Academic Faculty List">
+      <ActionBar title="Academic Department List">
         <Input
           type="text"
           size="large"
-          placeholder="Search"
+          placeholder="Search..."
           style={{
             width: "20%",
           }}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
         />
         <div>
-          <Link href="/admin/academic/faculty/create">
+          <Link href="/admin/academic/department/create">
             <Button type="primary">Create</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button onClick={resetFilters} style={{ margin: "0px 5px" }}>
+            <Button
+              onClick={resetFilters}
+              type="primary"
+              style={{ margin: "0px 5px" }}
+            >
               <ReloadOutlined />
             </Button>
           )}
@@ -169,7 +182,7 @@ const AcademicFacultyPage = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={academicFaculties}
+        dataSource={academicDepartments}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -180,4 +193,4 @@ const AcademicFacultyPage = () => {
   );
 };
 
-export default AcademicFacultyPage;
+export default AcademicDepartmentPage;

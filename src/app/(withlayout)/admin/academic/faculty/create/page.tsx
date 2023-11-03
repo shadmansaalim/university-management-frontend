@@ -4,19 +4,21 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Col, message, Row } from "antd";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createManagementDepartmentSchema } from "@/schemas/department";
-import { useAddDepartmentMutation } from "@/redux/api/departmentApi";
+import { useAddAcademicFacultyMutation } from "@/redux/api/academic/facultyApi";
 
-const CreateDepartmentPage = () => {
-  const [addDepartment] = useAddDepartmentMutation();
+import { Button, Col, Row, message } from "antd";
+
+const CreateAcademicFacultyPage = () => {
+  const [addAcademicFaculty] = useAddAcademicFacultyMutation();
 
   const onSubmit = async (data: any) => {
     message.loading("Creating ...");
     try {
-      await addDepartment(data);
-      message.success("Department added successfully.");
+      console.log(data);
+      const res = await addAcademicFaculty(data);
+      if (!!res) {
+        message.success("Academic Faculty Created Successfully");
+      }
     } catch (err: any) {
       console.error(err.message);
       message.error(err.message);
@@ -27,15 +29,12 @@ const CreateDepartmentPage = () => {
     <div>
       <UMBreadCrumb
         items={[
-          { label: `super_admin`, link: `/super_admin` },
-          { label: "department", link: `/super_admin/department` },
+          { label: `admin`, link: `/admin` },
+          { label: "academic-faculty", link: `/admin/academic/faculty` },
         ]}
       />
-      <h1>Create Department</h1>
-      <Form
-        submitHandler={onSubmit}
-        resolver={zodResolver(createManagementDepartmentSchema)}
-      >
+      <h1>Create Academic Faculty</h1>
+      <Form submitHandler={onSubmit}>
         <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
           <Col span={8} style={{ margin: "10px 0" }}>
             <FormInput name="title" label="Title" />
@@ -49,4 +48,4 @@ const CreateDepartmentPage = () => {
   );
 };
 
-export default CreateDepartmentPage;
+export default CreateAcademicFacultyPage;

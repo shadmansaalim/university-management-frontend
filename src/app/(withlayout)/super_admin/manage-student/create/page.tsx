@@ -11,8 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createStudentSchema } from "../../../../../schemas/student";
 
 const CreateStudentPage = () => {
-  const base = "super_admin";
-
   // Form steps
   const steps = [
     {
@@ -45,8 +43,8 @@ const CreateStudentPage = () => {
     <div>
       <UMBreadCrumb
         items={[
-          { label: `${base}`, link: `/${base}` },
-          { label: "manage-student", link: `/${base}/manage-student` },
+          { label: `super_admin`, link: `/super_admin` },
+          { label: "manage-student", link: `/super_admin/manage-student` },
         ]}
       />
 

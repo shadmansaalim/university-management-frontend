@@ -59,7 +59,8 @@ const AcademicSemesterPage = () => {
     message.loading("Deleting ...");
     try {
       const res = await deleteAcademicSemester(id);
-      if (res) {
+      console.log(res);
+      if (!!res) {
         message.success("Academic Semester Deleted successfully");
       }
     } catch (err: any) {
@@ -104,7 +105,6 @@ const AcademicSemesterPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "id",
       render: function (data: any) {
         return (
           <>

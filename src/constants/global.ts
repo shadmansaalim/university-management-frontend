@@ -27,37 +27,60 @@ export const bloodGroupOptions = bloodGroupData?.map((group) => {
   };
 });
 
-export const facultyOptions = [
-  {
-    label: "Engineering",
-    value: "engineering",
-  },
-  {
-    label: "Faculty of science and engineering",
-    value: "Faculty of science and engineering",
-  },
-];
-export const academicDepartmentOptions = [
-  {
-    label: "CSE",
-    value: "cse",
-  },
-  {
-    label: "Software Engineering",
-    value: "software engineering",
-  },
-];
 export const academicSemesterOptions = [
   {
-    label: "Fall 2023",
-    value: "fall2023",
+    label: "Autumn",
+    value: "Autumn",
   },
   {
-    label: "Autumn 2023",
-    value: "autumn2023",
+    label: "Summer",
+    value: "Summer",
   },
   {
-    label: "Summer 2023",
-    value: "summer2023",
+    label: "Fall",
+    value: "Fall",
   },
 ];
+
+export const academicSemesterTitleCodeMapper = {
+  Autumn: "01",
+  Summer: "02",
+  Fall: "03",
+};
+
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+export const monthOptions = months.map((month: string) => {
+  return {
+    label: month,
+    value: month,
+  };
+});
+
+export const days = [
+  "SATURDAY",
+  "SUNDAY",
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+];
+export const daysOptions = days.map((day: string) => {
+  return {
+    label: day,
+    value: day,
+  };
+});

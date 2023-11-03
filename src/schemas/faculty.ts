@@ -45,6 +45,5 @@ export const createFacultySchema = z.object({
     academicFaculty: z.string({
       required_error: "Academic faculty is required",
     }),
-    profileImage: z.string().optional(),
   }),
 });

@@ -82,6 +82,5 @@ export const createStudentSchema = z.object({
         required_error: "Local guardian address is required",
       }),
     }),
-    profileImage: z.string().optional(),
   }),
 });

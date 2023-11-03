@@ -11,7 +11,7 @@ import {
 import { useAddAcademicSemesterMutation } from "@/redux/api/academic/semesterApi";
 
 import { Button, Col, Row, message } from "antd";
-import { academicSemesterOptions } from "../../../../../../constants/global";
+import { academicSemesterOptions } from "@/constants/global";
 
 const CreateAcademicSemesterPage = () => {
   const [addAcademicSemester] = useAddAcademicSemesterMutation();

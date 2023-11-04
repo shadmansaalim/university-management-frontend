@@ -33,7 +33,7 @@ const CreateAcademicFacultyPage = () => {
           { label: "academic-faculty", link: `/admin/academic/faculty` },
         ]}
       />
-      <h1>Create Academic Faculty</h1>
+      <h1 style={{ margin: "10px 0px" }}>Create Academic Faculty</h1>
       <Form submitHandler={onSubmit}>
         <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
           <Col span={8} style={{ margin: "10px 0" }}>

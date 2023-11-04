@@ -13,14 +13,14 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 import {
-  useBuildingsQuery,
-  useDeleteBuildingMutation,
-} from "@/redux/api/buildingApi";
+  useCoursesQuery,
+  useDeleteCourseMutation,
+} from "@/redux/api/courseApi";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
 
-const ManageBuildingPage = () => {
+const ManageCoursePage = () => {
   // States
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -28,9 +28,9 @@ const ManageBuildingPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const [deleteBuilding] = useDeleteBuildingMutation();
+  const [deleteCourse] = useDeleteCourseMutation();
 
-  // API call buildings query
+  // API call courses query
   const query: Record<string, any> = {};
 
   query["limit"] = size;
@@ -48,19 +48,21 @@ const ManageBuildingPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  // Getting all buildings
-  const { data, isLoading } = useBuildingsQuery({ ...query });
+  // Getting all courses
+  const { data, isLoading } = useCoursesQuery({ ...query });
 
-  const buildings = data?.buildings;
+  const courses = data?.courses;
   const meta = data?.meta as IMeta;
 
-  // Function to delete building
+  // Function to delete course
   const deleteHandler = async (id: string) => {
     message.loading("Deleting ...");
     try {
       //   console.log(data);
-      await deleteBuilding(id);
-      message.success("Building Deleted successfully");
+      const res = await deleteCourse(id);
+      if (res) {
+        message.success("Course Deleted successfully");
+      }
     } catch (err: any) {
       //   console.error(err.message);
       message.error(err.message);
@@ -72,7 +74,17 @@ const ManageBuildingPage = () => {
     {
       title: "Title",
       dataIndex: "title",
-      key: "title",
+      sorter: true,
+    },
+    {
+      title: "Code",
+      dataIndex: "code",
+      sorter: true,
+    },
+    {
+      title: "Credits",
+      dataIndex: "credits",
+      sorter: true,
     },
     {
       title: "CreatedAt",
@@ -81,14 +93,13 @@ const ManageBuildingPage = () => {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
-      key: "createdAt",
     },
     {
       title: "Action",
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/building/edit/${data?.id}`}>
+            <Link href={`/admin/course/edit/${data?.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -109,7 +120,6 @@ const ManageBuildingPage = () => {
           </>
         );
       },
-      key: "action",
     },
   ];
 
@@ -145,7 +155,7 @@ const ManageBuildingPage = () => {
         ]}
       />
 
-      <ActionBar title="Building List">
+      <ActionBar title="Course List">
         <Input
           type="text"
           size="large"
@@ -158,7 +168,7 @@ const ManageBuildingPage = () => {
           }}
         />
         <div>
-          <Link href="/admin/building/create">
+          <Link href="/admin/course/create">
             <Button type="primary">Create</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -176,7 +186,7 @@ const ManageBuildingPage = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={buildings}
+        dataSource={courses}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -188,4 +198,4 @@ const ManageBuildingPage = () => {
   );
 };
 
-export default ManageBuildingPage;
+export default ManageCoursePage;

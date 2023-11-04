@@ -13,14 +13,14 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 import {
-  useBuildingsQuery,
-  useDeleteBuildingMutation,
-} from "@/redux/api/buildingApi";
+  useDeleteSemesterRegistrationMutation,
+  useSemesterRegistrationsQuery,
+} from "@/redux/api/semesterRegistrationApi";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
 
-const ManageBuildingPage = () => {
+const SemesterRegistrationPage = () => {
   // States
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -28,9 +28,9 @@ const ManageBuildingPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const [deleteBuilding] = useDeleteBuildingMutation();
+  const [deleteSemesterRegistrations] = useDeleteSemesterRegistrationMutation();
 
-  // API call buildings query
+  // API call semester registrations query
   const query: Record<string, any> = {};
 
   query["limit"] = size;
@@ -48,19 +48,21 @@ const ManageBuildingPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  // Getting all buildings
-  const { data, isLoading } = useBuildingsQuery({ ...query });
+  // Getting all semester registrations
+  const { data, isLoading } = useSemesterRegistrationsQuery({ ...query });
 
-  const buildings = data?.buildings;
+  const semesterRegistrations = data?.semesterRegistrations;
   const meta = data?.meta as IMeta;
 
-  // Function to delete building
+  // Function to delete semester registration
   const deleteHandler = async (id: string) => {
     message.loading("Deleting ...");
     try {
       //   console.log(data);
-      await deleteBuilding(id);
-      message.success("Building Deleted successfully");
+      const res = await deleteSemesterRegistrations(id);
+      if (res) {
+        message.success("Semester Registration Deleted successfully");
+      }
     } catch (err: any) {
       //   console.error(err.message);
       message.error(err.message);
@@ -70,9 +72,33 @@ const ManageBuildingPage = () => {
   // Table columns
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "Start Date",
+      dataIndex: "startDate",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
+      sorter: true,
+    },
+    {
+      title: "End Date",
+      dataIndex: "endDate",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
+      sorter: true,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      sorter: true,
+    },
+    {
+      title: "Academic semester",
+      dataIndex: "academicSemester",
+      sorter: true,
+      render: function (data: any) {
+        return <>{data?.title}</>;
+      },
     },
     {
       title: "CreatedAt",
@@ -81,14 +107,13 @@ const ManageBuildingPage = () => {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
-      key: "createdAt",
     },
     {
       title: "Action",
       render: function (data: any) {
         return (
           <>
-            <Link href={`/admin/building/edit/${data?.id}`}>
+            <Link href={`/admin/semester-registration/edit/${data?.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -109,7 +134,6 @@ const ManageBuildingPage = () => {
           </>
         );
       },
-      key: "action",
     },
   ];
 
@@ -145,7 +169,7 @@ const ManageBuildingPage = () => {
         ]}
       />
 
-      <ActionBar title="Building List">
+      <ActionBar title="Semester Registration List">
         <Input
           type="text"
           size="large"
@@ -158,7 +182,7 @@ const ManageBuildingPage = () => {
           }}
         />
         <div>
-          <Link href="/admin/building/create">
+          <Link href="/admin/semester-registration/create">
             <Button type="primary">Create</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -176,7 +200,7 @@ const ManageBuildingPage = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={buildings}
+        dataSource={semesterRegistrations}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -188,4 +212,4 @@ const ManageBuildingPage = () => {
   );
 };
 
-export default ManageBuildingPage;
+export default SemesterRegistrationPage;

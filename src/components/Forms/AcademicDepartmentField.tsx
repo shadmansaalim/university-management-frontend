@@ -5,11 +5,13 @@ import FormSelectField, { SelectOptions } from "./FormSelectField";
 type AcademicDepartmentFieldProps = {
   name: string;
   label?: string;
+  onChange?: (value: any) => void;
 };
 
 const AcademicDepartmentField = ({
   name,
   label,
+  onChange,
 }: AcademicDepartmentFieldProps) => {
   const { data, isLoading } = useAcademicDepartmentsQuery({
     limit: 100,
@@ -28,6 +30,7 @@ const AcademicDepartmentField = ({
       name={name}
       label={label}
       options={acDepartmentOptions as SelectOptions[]}
+      handleChange={onChange ? (e) => onChange(e) : undefined}
     />
   );
 };

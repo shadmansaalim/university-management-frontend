@@ -16,7 +16,7 @@ const CreateRoomPage = () => {
   const [addRoom] = useAddRoomMutation();
 
   const { data, isLoading } = useBuildingsQuery({
-    limit: 100,
+    limit: 1,
     page: 1,
   });
 
@@ -42,7 +42,7 @@ const CreateRoomPage = () => {
       message.error(err.message);
     }
   };
-  const base = "admin";
+
   return (
     <>
       {isLoading ? (
@@ -51,8 +51,8 @@ const CreateRoomPage = () => {
         <div>
           <UMBreadCrumb
             items={[
-              { label: `${base}`, link: `/${base}` },
-              { label: "room", link: `/${base}/room` },
+              { label: `admin`, link: `/admin` },
+              { label: "room", link: `/admin/room` },
             ]}
           />
           <h1 style={{ margin: "10px 0px" }}>Create Room</h1>

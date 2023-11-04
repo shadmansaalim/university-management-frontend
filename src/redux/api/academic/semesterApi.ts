@@ -5,7 +5,7 @@ import { baseApi } from "../baseApi";
 import { TAG_TYPES } from "@/redux/tag-types";
 import { IAcademicSemester } from "../../../types/common";
 
-const ACADEMIC_SEMESTER_URL = "/academic-semesters";
+const ENDPOINT_BASE_URL = "/academic-semesters";
 
 export const academicSemesterApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -13,7 +13,7 @@ export const academicSemesterApi = baseApi.injectEndpoints({
     academicSemesters: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: ACADEMIC_SEMESTER_URL,
+          url: ENDPOINT_BASE_URL,
           method: "GET",
           params: arg,
         };
@@ -30,7 +30,7 @@ export const academicSemesterApi = baseApi.injectEndpoints({
     // GET single academic semester by id api endpoint
     academicSemester: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `${ACADEMIC_SEMESTER_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "GET",
       }),
       providesTags: [TAG_TYPES.academicSemester],
@@ -39,7 +39,7 @@ export const academicSemesterApi = baseApi.injectEndpoints({
     // CREATE academic semester api endpoint
     addAcademicSemester: build.mutation({
       query: (data) => ({
-        url: ACADEMIC_SEMESTER_URL,
+        url: ENDPOINT_BASE_URL,
         method: "POST",
         data,
       }),
@@ -49,7 +49,7 @@ export const academicSemesterApi = baseApi.injectEndpoints({
     // UPDATE academic semester api endpoint
     updateAcademicSemester: build.mutation({
       query: (data) => ({
-        url: `${ACADEMIC_SEMESTER_URL}/${data.id}`,
+        url: `${ENDPOINT_BASE_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
       }),
@@ -59,7 +59,7 @@ export const academicSemesterApi = baseApi.injectEndpoints({
     // DELETE academic semester api endpoint
     deleteAcademicSemester: build.mutation({
       query: (id) => ({
-        url: `${ACADEMIC_SEMESTER_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [TAG_TYPES.academicSemester],

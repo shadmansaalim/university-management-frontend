@@ -155,7 +155,7 @@ const AcademicDepartmentPage = () => {
         <Input
           type="text"
           size="large"
-          placeholder="Search..."
+          placeholder="Search"
           style={{
             width: "20%",
           }}

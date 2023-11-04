@@ -4,7 +4,7 @@ import { IAcademicDepartment, IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { TAG_TYPES } from "@/redux/tag-types";
 
-const ACADEMIC_DEPARTMENT_URL = "/academic-departments";
+const ENDPOINT_BASE_URL = "/academic-departments";
 
 export const academicDepartmentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,7 +12,7 @@ export const academicDepartmentApi = baseApi.injectEndpoints({
     academicDepartments: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: ACADEMIC_DEPARTMENT_URL,
+          url: ENDPOINT_BASE_URL,
           method: "GET",
           params: arg,
         };
@@ -29,7 +29,7 @@ export const academicDepartmentApi = baseApi.injectEndpoints({
     // GET single academic department by id api endpoint
     academicDepartment: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `${ACADEMIC_DEPARTMENT_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "GET",
       }),
       providesTags: [TAG_TYPES.academicDepartment],
@@ -38,7 +38,7 @@ export const academicDepartmentApi = baseApi.injectEndpoints({
     // CREATE academic department api endpoint
     addAcademicDepartment: build.mutation({
       query: (data) => ({
-        url: ACADEMIC_DEPARTMENT_URL,
+        url: ENDPOINT_BASE_URL,
         method: "POST",
         data,
       }),
@@ -48,7 +48,7 @@ export const academicDepartmentApi = baseApi.injectEndpoints({
     // UPDATE academic department api endpoint
     updateAcademicDepartment: build.mutation({
       query: (data) => ({
-        url: `${ACADEMIC_DEPARTMENT_URL}/${data.id}`,
+        url: `${ENDPOINT_BASE_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
       }),
@@ -58,7 +58,7 @@ export const academicDepartmentApi = baseApi.injectEndpoints({
     // DELETE academic department api endpoint
     deleteAcademicDepartment: build.mutation({
       query: (id) => ({
-        url: `${ACADEMIC_DEPARTMENT_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [TAG_TYPES.academicDepartment],

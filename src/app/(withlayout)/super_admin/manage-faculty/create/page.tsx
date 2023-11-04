@@ -9,29 +9,33 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, message } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFacultySchema } from "../../../../../schemas/faculty";
+import { useAddFacultyWithFormDataMutation } from "@/redux/api/facultyApi";
+import AcademicFacultyField from "@/components/Forms/AcademicFacultyField";
+import AcademicDepartmentField from "@/components/Forms/AcademicDepartmentField";
 
 const CreateFacultyPage = () => {
-  const departmentOptions = [
-    {
-      label: "HR",
-      value: "hr",
-    },
-    {
-      label: "Finance",
-      value: "finance",
-    },
-    {
-      label: "Management",
-      value: "Management",
-    },
-  ];
+  const [addFacultyWithFormData] = useAddFacultyWithFormDataMutation();
 
-  const handleCreateFaculty = async (data: any) => {
+  const handleCreateFaculty = async (values: any) => {
+    // Destructuring
+    const obj = { ...values };
+    // Getting the file and storing and then deleting from obj
+    const file = obj["file"];
+    delete obj["file"];
+    // Stringify JSON object
+    const data = JSON.stringify(obj);
+    const formData = new FormData();
+    formData.append("file", file as Blob);
+    formData.append("data", data);
+    message.loading("Creating ...");
     try {
-      console.log(data);
+      const res = await addFacultyWithFormData(formData);
+      if (!!res) {
+        message.success("Faculty created successfully.");
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -41,11 +45,11 @@ const CreateFacultyPage = () => {
     <>
       <UMBreadCrumb
         items={[
-          { label: "super_admin", link: "/super_admin" },
-          { label: "manage-faculty", link: "/super_admin/manage-faculty" },
+          { label: "admin", link: "/admin" },
+          { label: "manage-faculty", link: "/admin/manage-faculty" },
         ]}
       />
-      <h1>Create Faculty</h1>
+      <h1 style={{ margin: "12px 0px" }}>Create Faculty</h1>
       <Form
         submitHandler={handleCreateFaculty}
         resolver={zodResolver(createFacultySchema)}
@@ -58,7 +62,13 @@ const CreateFacultyPage = () => {
             marginBottom: "10px",
           }}
         >
-          <p style={{ fontSize: "18px", fontWeight: "500", margin: "5px 0px" }}>
+          <p
+            style={{
+              fontSize: "18px",
+              fontWeight: "500",
+              margin: "5px 0px",
+            }}
+          >
             Faculty information
           </p>
           <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
@@ -104,17 +114,15 @@ const CreateFacultyPage = () => {
             </Col>
 
             <Col span={8} style={{ margin: "10px 0" }}>
-              <FormSelectField
+              <AcademicFacultyField
                 name="faculty.academicFaculty"
                 label="Academic Faculty"
-                options={departmentOptions}
               />
             </Col>
             <Col span={8} style={{ margin: "10px 0" }}>
-              <FormSelectField
+              <AcademicDepartmentField
                 name="faculty.academicDepartment"
                 label="Academic Department"
-                options={departmentOptions}
               />
             </Col>
 
@@ -131,7 +139,13 @@ const CreateFacultyPage = () => {
             marginBottom: "10px",
           }}
         >
-          <p style={{ fontSize: "18px", fontWeight: "500", margin: "5px 0px" }}>
+          <p
+            style={{
+              fontSize: "18px",
+              fontWeight: "500",
+              margin: "5px 0px",
+            }}
+          >
             Basic information
           </p>
           <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
@@ -200,7 +214,9 @@ const CreateFacultyPage = () => {
             </Col>
           </Row>
         </div>
-        <Button htmlType="submit">submit</Button>
+        <Button type="primary" htmlType="submit">
+          Create
+        </Button>
       </Form>
     </>
   );

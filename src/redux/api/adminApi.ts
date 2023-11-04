@@ -3,7 +3,7 @@ import { IAdmin, IMeta } from "@/types";
 import { baseApi } from "./baseApi";
 import { TAG_TYPES } from "../tag-types";
 
-const ADMIN_URL = "/admins";
+const ENDPOINT_BASE_URL = "/admins";
 
 export const adminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -20,7 +20,7 @@ export const adminApi = baseApi.injectEndpoints({
     admins: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: ADMIN_URL,
+          url: ENDPOINT_BASE_URL,
           method: "GET",
           params: arg,
         };

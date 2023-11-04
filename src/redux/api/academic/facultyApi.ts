@@ -4,7 +4,7 @@ import { IAcademicFaculty, IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 import { TAG_TYPES } from "@/redux/tag-types";
 
-const ACADEMIC_FACULTY_URL = "/academic-faculties";
+const ENDPOINT_BASE_URL = "/academic-faculties";
 
 export const academicFacultyApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,7 +12,7 @@ export const academicFacultyApi = baseApi.injectEndpoints({
     academicFaculties: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: ACADEMIC_FACULTY_URL,
+          url: ENDPOINT_BASE_URL,
           method: "GET",
           params: arg,
         };
@@ -29,7 +29,7 @@ export const academicFacultyApi = baseApi.injectEndpoints({
     // GET single academic faculty by id api endpoint
     academicFaculty: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `${ACADEMIC_FACULTY_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "GET",
       }),
       providesTags: [TAG_TYPES.academicFaculty],
@@ -38,7 +38,7 @@ export const academicFacultyApi = baseApi.injectEndpoints({
     // CREATE academic faculty api endpoint
     addAcademicFaculty: build.mutation({
       query: (data) => ({
-        url: ACADEMIC_FACULTY_URL,
+        url: ENDPOINT_BASE_URL,
         method: "POST",
         data,
       }),
@@ -48,7 +48,7 @@ export const academicFacultyApi = baseApi.injectEndpoints({
     // UPDATE academic faculty api endpoint
     updateAcademicFaculty: build.mutation({
       query: (data) => ({
-        url: `${ACADEMIC_FACULTY_URL}/${data.id}`,
+        url: `${ENDPOINT_BASE_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
       }),
@@ -58,7 +58,7 @@ export const academicFacultyApi = baseApi.injectEndpoints({
     // DELETE academic faculty api endpoint
     deleteAcademicFaculty: build.mutation({
       query: (id) => ({
-        url: `${ACADEMIC_FACULTY_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [TAG_TYPES.academicFaculty],

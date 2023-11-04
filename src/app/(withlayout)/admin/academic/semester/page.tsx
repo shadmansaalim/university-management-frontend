@@ -167,7 +167,7 @@ const AcademicSemesterPage = () => {
         <Input
           type="text"
           size="large"
-          placeholder="Search..."
+          placeholder="Search"
           style={{
             width: "20%",
           }}

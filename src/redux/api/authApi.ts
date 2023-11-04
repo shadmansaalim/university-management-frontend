@@ -3,13 +3,13 @@ import { TAG_TYPES } from "../tag-types";
 import { baseApi } from "./baseApi";
 
 // Constant for this api routes
-const AUTH_URL = "/auth";
+const ENDPOINT_BASE_URL = "/auth";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     userLogin: build.mutation({
       query: (loginData) => ({
-        url: `${AUTH_URL}/login`,
+        url: `${ENDPOINT_BASE_URL}/login`,
         method: "POST",
         data: loginData,
       }),

@@ -3,7 +3,7 @@ import { IFaculty, IMeta } from "@/types";
 import { baseApi } from "./baseApi";
 import { TAG_TYPES } from "@/redux/tag-types";
 
-const FACULTY_URL = "/faculties";
+const ENDPOINT_BASE_URL = "/faculties";
 
 export const facultyApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -11,7 +11,7 @@ export const facultyApi = baseApi.injectEndpoints({
     faculties: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: FACULTY_URL,
+          url: ENDPOINT_BASE_URL,
           method: "GET",
           params: arg,
         };
@@ -28,7 +28,7 @@ export const facultyApi = baseApi.injectEndpoints({
     // GET single faculty by id api endpoint
     faculty: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `${FACULTY_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "GET",
       }),
       providesTags: [TAG_TYPES.faculty],
@@ -48,7 +48,7 @@ export const facultyApi = baseApi.injectEndpoints({
     // UPDATE faculty api endpoint
     updateFaculty: build.mutation({
       query: (data) => ({
-        url: `${FACULTY_URL}/${data.id}`,
+        url: `${ENDPOINT_BASE_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
       }),
@@ -58,7 +58,7 @@ export const facultyApi = baseApi.injectEndpoints({
     // DELETE faculty api endpoint
     deleteFaculty: build.mutation({
       query: (id) => ({
-        url: `${FACULTY_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [TAG_TYPES.faculty],

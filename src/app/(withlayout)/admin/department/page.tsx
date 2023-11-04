@@ -138,8 +138,8 @@ const ManageDepartmentPage = () => {
       <UMBreadCrumb
         items={[
           {
-            label: "super_admin",
-            link: "/super_admin",
+            label: "admin",
+            link: "/admin",
           },
         ]}
       />
@@ -154,7 +154,7 @@ const ManageDepartmentPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <div>
-          <Link href="/super_admin/department/create">
+          <Link href="/admin/department/create">
             <Button type="primary">Create</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

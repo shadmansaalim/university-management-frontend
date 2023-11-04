@@ -3,7 +3,7 @@ import { IMeta, IStudent } from "@/types";
 import { baseApi } from "./baseApi";
 import { TAG_TYPES } from "@/redux/tag-types";
 
-const STUDENT_URL = "/students";
+const ENDPOINT_BASE_URL = "/students";
 
 export const studentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -11,7 +11,7 @@ export const studentApi = baseApi.injectEndpoints({
     students: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: STUDENT_URL,
+          url: ENDPOINT_BASE_URL,
           method: "GET",
           params: arg,
         };
@@ -28,7 +28,7 @@ export const studentApi = baseApi.injectEndpoints({
     // GET single student by id api endpoint
     student: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `${STUDENT_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "GET",
       }),
       providesTags: [TAG_TYPES.student],
@@ -48,7 +48,7 @@ export const studentApi = baseApi.injectEndpoints({
     // UPDATE student api endpoint
     updateStudent: build.mutation({
       query: (data) => ({
-        url: `${STUDENT_URL}/${data.id}`,
+        url: `${ENDPOINT_BASE_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
       }),
@@ -58,7 +58,7 @@ export const studentApi = baseApi.injectEndpoints({
     // DELETE student api endpoint
     deleteStudent: build.mutation({
       query: (id) => ({
-        url: `${STUDENT_URL}/${id}`,
+        url: `${ENDPOINT_BASE_URL}/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [TAG_TYPES.student],

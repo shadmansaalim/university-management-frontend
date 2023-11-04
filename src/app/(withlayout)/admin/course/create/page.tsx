@@ -27,7 +27,7 @@ const CreateCoursePage = () => {
     // Parsing credits to int before sending in backend
     data.credits = parseInt(data?.credits);
 
-    const preRequisiteCourseOptions = data?.preRequisiteCourses?.map(
+    const coursePreRequisitesOptions = data?.coursePreRequisites?.map(
       (id: string) => {
         return {
           courseId: id,
@@ -35,7 +35,7 @@ const CreateCoursePage = () => {
       }
     );
 
-    data.preRequisiteCourses = preRequisiteCourseOptions;
+    data.coursePreRequisites = coursePreRequisitesOptions;
 
     message.loading("Creating ...");
     try {
@@ -77,7 +77,7 @@ const CreateCoursePage = () => {
                 <div style={{ margin: "10px 0px" }}>
                   <FormMultiSelectField
                     options={coursesOptions as SelectOptions[]}
-                    name="preRequisiteCourses"
+                    name="coursePreRequisites"
                     label="Pre Requisite Courses"
                   />
                 </div>

@@ -7,7 +7,7 @@ import { Button, Col, Row, message } from "antd";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "../../../../../components/Forms/FormSelectField";
 import { bloodGroupOptions, genderOptions } from "@/constants/global";
-import UploadImage from "../../../../../components/ui/UploadImage";
+import UploadImage from "@/components/ui/UploadImage";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { createAdminSchema } from "@/schemas/admin";
@@ -162,19 +162,12 @@ const CreateAdminPage = () => {
               </Col>
               <Col
                 className="gutter-row"
-                span={8}
+                span={24}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <p
-                  style={{
-                    marginBottom: "6px",
-                  }}
-                >
-                  Profile Image
-                </p>
-                <UploadImage name="file" />
+                <UploadImage name="file" label="Profile Image" />
               </Col>
             </Row>
           </div>

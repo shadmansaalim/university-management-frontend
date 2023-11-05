@@ -1,11 +1,10 @@
 // Imports
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { message, Upload, Button } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import { useState } from "react";
-import Image from "next/image";
 import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -25,57 +24,32 @@ const beforeUpload = (file: RcFile) => {
   return isJpgOrPng && isLt2M;
 };
 
-const UploadImage = ({ name }: { name: string }) => {
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
+const UploadImage = ({ name, label }: { name: string; label?: string }) => {
   const { setValue } = useFormContext();
+  const [showUploadButton, setShowUploadButton] = useState(true);
 
   const handleChange: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
   ) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
     if (info.file.status === "done") {
       setValue(name, info.file.originFileObj);
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
+      setShowUploadButton(false);
     }
   };
-
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
 
   return (
     <>
       <Upload
         name={name}
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
+        listType="picture"
         action="/api/file"
         beforeUpload={beforeUpload}
         onChange={handleChange}
+        maxCount={1}
+        onRemove={() => setShowUploadButton(true)}
       >
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt="avatar"
-            style={{ width: "100%" }}
-            width={100}
-            height={100}
-          />
-        ) : (
-          uploadButton
-        )}
+        {label && <p style={{ marginBottom: "4px" }}>{label}</p>}
+        {showUploadButton && <Button icon={<UploadOutlined />}>Upload</Button>}
       </Upload>
     </>
   );

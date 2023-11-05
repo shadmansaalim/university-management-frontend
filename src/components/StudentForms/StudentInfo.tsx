@@ -131,12 +131,12 @@ const StudentInfo = () => {
         </Col>
         <Col
           className="gutter-row"
-          span={8}
+          span={24}
           style={{
             marginBottom: "10px",
           }}
         >
-          <UploadImage name="file" />
+          <UploadImage name="file" label="Profile Image" />
         </Col>
       </Row>
     </div>

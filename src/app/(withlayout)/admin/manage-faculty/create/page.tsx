@@ -126,8 +126,8 @@ const CreateFacultyPage = () => {
               />
             </Col>
 
-            <Col span={8} style={{ margin: "10px 0" }}>
-              <UploadImage name="file" />
+            <Col span={24} style={{ margin: "10px 0" }}>
+              <UploadImage name="file" label="Profile Image" />
             </Col>
           </Row>
         </div>

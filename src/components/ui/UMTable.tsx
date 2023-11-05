@@ -44,6 +44,7 @@ const UMTable = ({
         dataSource={dataSource}
         pagination={paginationConfig}
         onChange={onTableChange}
+        rowKey={(data) => data.id}
       />
     </div>
   );

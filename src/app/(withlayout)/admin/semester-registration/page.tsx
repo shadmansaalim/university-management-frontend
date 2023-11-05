@@ -3,7 +3,7 @@
 // Imports
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { IMeta } from "@/types";
-import { Button, Input, message } from "antd";
+import { Button, Input, message, Tooltip } from "antd";
 import Link from "next/link";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
@@ -11,10 +11,12 @@ import {
   EditOutlined,
   DeleteOutlined,
   ReloadOutlined,
+  PlayCircleOutlined,
 } from "@ant-design/icons";
 import {
   useDeleteSemesterRegistrationMutation,
   useSemesterRegistrationsQuery,
+  useStartNewSemesterMutation,
 } from "@/redux/api/semesterRegistrationApi";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
@@ -29,6 +31,7 @@ const SemesterRegistrationPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [deleteSemesterRegistrations] = useDeleteSemesterRegistrationMutation();
+  const [startNewSemester] = useStartNewSemesterMutation();
 
   // API call semester registrations query
   const query: Record<string, any> = {};
@@ -53,6 +56,16 @@ const SemesterRegistrationPage = () => {
 
   const semesterRegistrations = data?.semesterRegistrations;
   const meta = data?.meta as IMeta;
+
+  // Function to start semester
+  const handleStartSemester = async (id: string) => {
+    try {
+      const res = await startNewSemester(id).unwrap();
+      message.success(res.message);
+    } catch (err: any) {
+      message.error(err?.message);
+    }
+  };
 
   // Function to delete semester registration
   const deleteHandler = async (id: string) => {
@@ -124,6 +137,28 @@ const SemesterRegistrationPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
+
+            {data?.status === "ENDED" && (
+              <Tooltip
+                title={
+                  data?.academicSemester?.isCurrent
+                    ? "Semester Already Started."
+                    : "Start Semester"
+                }
+                placement="bottom"
+              >
+                <Button
+                  disabled={data?.academicSemester?.isCurrent}
+                  type="primary"
+                  onClick={() => handleStartSemester(data?.id)}
+                  style={{
+                    margin: "0px 5px",
+                  }}
+                >
+                  <PlayCircleOutlined />
+                </Button>
+              </Tooltip>
+            )}
             <Button
               onClick={() => deleteHandler(data?.id)}
               type="primary"

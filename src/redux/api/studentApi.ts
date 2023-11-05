@@ -1,5 +1,5 @@
 // Imports
-import { IMeta, IStudent } from "@/types";
+import { IMeta, IMyCourse, IStudent } from "@/types";
 import { baseApi } from "./baseApi";
 import { TAG_TYPES } from "@/redux/tag-types";
 
@@ -63,6 +63,46 @@ export const studentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [TAG_TYPES.student],
     }),
+    myCourses: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${ENDPOINT_BASE_URL}/my-courses`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: IMyCourse[], meta: IMeta) => {
+        return {
+          myCourses: response,
+          meta,
+        };
+      },
+      providesTags: [TAG_TYPES.student],
+    }),
+    myCourseSchedules: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${ENDPOINT_BASE_URL}/my-course-schedules`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: IStudent[], meta: IMeta) => {
+        return {
+          myCourseSchedules: response,
+          meta,
+        };
+      },
+      providesTags: [TAG_TYPES.student],
+    }),
+    myAcademicInfos: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${ENDPOINT_BASE_URL}/my-academic-infos`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [TAG_TYPES.student],
+    }),
   }),
 });
 
@@ -72,4 +112,7 @@ export const {
   useStudentQuery,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
+  useMyCoursesQuery,
+  useMyCourseSchedulesQuery,
+  useMyAcademicInfosQuery,
 } = studentApi;

@@ -1,5 +1,5 @@
 // Imports
-import { IFaculty, IMeta } from "@/types";
+import { ICoreFaculty, IFaculty, IFacultyCourse, IMeta } from "@/types";
 import { baseApi } from "./baseApi";
 import { TAG_TYPES } from "@/redux/tag-types";
 
@@ -63,6 +63,40 @@ export const facultyApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [TAG_TYPES.faculty],
     }),
+
+    facultyCourses: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${ENDPOINT_BASE_URL}/my-courses`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: IFacultyCourse[], meta: IMeta) => {
+        return {
+          myCourses: response,
+          meta,
+        };
+      },
+      providesTags: [TAG_TYPES.student],
+    }),
+
+    facultyCourseStudents: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${ENDPOINT_BASE_URL}/my-course-students`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: ICoreFaculty[], meta: IMeta) => {
+        return {
+          myCourseStudents: response,
+          meta,
+        };
+      },
+      providesTags: [TAG_TYPES.student],
+    }),
   }),
 });
 
@@ -72,4 +106,7 @@ export const {
   useFacultyQuery,
   useUpdateFacultyMutation,
   useDeleteFacultyMutation,
+
+  useFacultyCoursesQuery,
+  useFacultyCourseStudentsQuery,
 } = facultyApi;

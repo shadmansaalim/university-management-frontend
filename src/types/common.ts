@@ -306,3 +306,13 @@ export interface IMyCourse {
   status: string;
   course: ICourse;
 }
+
+export interface SectionsEntity {
+  section: IOfferedCourseSection;
+  classSchedules?: IOfferedCourseSchedule[] | null;
+}
+
+export interface IFacultyCourse {
+  course: ICourse;
+  sections?: SectionsEntity[] | null;
+}

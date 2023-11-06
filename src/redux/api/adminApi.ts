@@ -33,7 +33,36 @@ export const adminApi = baseApi.injectEndpoints({
       },
       providesTags: [TAG_TYPES.admin],
     }),
+
+    admin: build.query({
+      query: (id: string | string[] | undefined) => ({
+        url: `${ENDPOINT_BASE_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: [TAG_TYPES.admin],
+    }),
+    updateAdmin: build.mutation({
+      query: (data) => ({
+        url: `${ENDPOINT_BASE_URL}/${data.id}`,
+        method: "PATCH",
+        data: data.body,
+      }),
+      invalidatesTags: [TAG_TYPES.admin],
+    }),
+    deleteAdmin: build.mutation({
+      query: (id) => ({
+        url: `${ENDPOINT_BASE_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [TAG_TYPES.admin],
+    }),
   }),
 });
 
-export const { useAdminsQuery, useAddAdminWithFormDataMutation } = adminApi;
+export const {
+  useAdminsQuery,
+  useAddAdminWithFormDataMutation,
+  useAdminQuery,
+  useUpdateAdminMutation,
+  useDeleteAdminMutation,
+} = adminApi;

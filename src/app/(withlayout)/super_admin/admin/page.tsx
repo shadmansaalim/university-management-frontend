@@ -3,7 +3,7 @@
 // Imports
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -14,9 +14,10 @@ import {
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
-import { useAdminsQuery } from "@/redux/api/adminApi";
+import { useAdminsQuery, useDeleteAdminMutation } from "@/redux/api/adminApi";
 import { IDepartment, IMeta } from "@/types";
 import dayjs from "dayjs";
+import UMModal from "@/components/ui/UMModal";
 
 const ManageAdminPage = () => {
   // States
@@ -25,6 +26,8 @@ const ManageAdminPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [adminId, setAdminId] = useState<string>("");
 
   // API call departments query
   const query: Record<string, any> = {};
@@ -49,6 +52,8 @@ const ManageAdminPage = () => {
 
   const admins = data?.admins;
   const meta = data?.meta as IMeta;
+
+  const [deleteAdmin] = useDeleteAdminMutation();
 
   // Table columns
   const columns = [
@@ -100,12 +105,12 @@ const ManageAdminPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/super_admin/admin/details/${data.id}`}>
+            <Link href={`/super_admin/admin/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
-            <Link href={`/super_admin/admin/edit/${data.id}`}>
+            <Link href={`/super_admin/admin/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -116,7 +121,15 @@ const ManageAdminPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data)} type="primary" danger>
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpen(true);
+                setAdminId(data);
+              }}
+              danger
+              style={{ marginLeft: "3px" }}
+            >
               <DeleteOutlined />
             </Button>
           </>
@@ -144,6 +157,19 @@ const ManageAdminPage = () => {
     setSortBy("");
     setSortOrder("");
     setSearchTerm("");
+  };
+
+  // Function to delete admin
+  const deleteAdminHandler = async (id: string) => {
+    try {
+      const res = await deleteAdmin(id);
+      if (res) {
+        message.success("Admin Successfully Deleted!");
+        setOpen(false);
+      }
+    } catch (error: any) {
+      message.error(error.message);
+    }
   };
 
   return (
@@ -192,6 +218,15 @@ const ManageAdminPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+
+      <UMModal
+        title={`Remove Admin ${adminId}`}
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteAdminHandler(adminId)}
+      >
+        <p className="my-5">Do you want to remove this admin?</p>
+      </UMModal>
     </div>
   );
 };

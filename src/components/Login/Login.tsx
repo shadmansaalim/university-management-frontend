@@ -10,6 +10,8 @@ import { SubmitHandler } from "react-hook-form";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginZodSchema } from "@/schemas/auth";
 
 type FormValues = {
   id: string;
@@ -56,9 +58,15 @@ const Login = () => {
           Login to access your portal
         </h1>
         <div>
-          <Form submitHandler={onSubmit}>
+          <Form submitHandler={onSubmit} resolver={zodResolver(loginZodSchema)}>
             <div>
-              <FormInput name="id" type="text" size="large" label="User Id" />
+              <FormInput
+                name="id"
+                type="text"
+                size="large"
+                label="User Id"
+                required
+              />
             </div>
             <div
               style={{
@@ -70,6 +78,7 @@ const Login = () => {
                 type="password"
                 size="large"
                 label="User Password"
+                required
               />
             </div>
             <Button type="primary" htmlType="submit">

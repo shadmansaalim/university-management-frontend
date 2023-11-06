@@ -16,7 +16,7 @@ const CreateRoomPage = () => {
   const [addRoom] = useAddRoomMutation();
 
   const { data, isLoading } = useBuildingsQuery({
-    limit: 1,
+    limit: 100,
     page: 1,
   });
 

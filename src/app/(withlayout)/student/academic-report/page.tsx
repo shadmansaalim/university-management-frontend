@@ -11,8 +11,6 @@ const AcademicReport = () => {
   const query: Record<string, any> = {};
   const { data, isLoading } = useMyAcademicInfosQuery({ ...query });
 
-  console.log;
-
   const columns = [
     {
       title: "Grade Report",

@@ -1,12 +1,18 @@
 type ActionBarProps = {
   title?: string;
+  subTitle?: string;
   children?: React.ReactElement | React.ReactNode;
 };
 
-const ActionBar = ({ title, children }: ActionBarProps) => {
+const ActionBar = ({ title, subTitle, children }: ActionBarProps) => {
   return (
     <div>
-      <h1 style={{ margin: "8px 0px" }}>{title}</h1>
+      <div style={{ margin: "8px 0px" }}>
+        <h1>{title}</h1>
+        <p style={{ fontSize: "20px", marginTop: "8px", color: "#8B1E3F" }}>
+          {subTitle}
+        </p>
+      </div>
       <div
         style={{
           display: "flex",

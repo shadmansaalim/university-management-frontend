@@ -105,7 +105,7 @@ const FacultyCoursesPage = () => {
               return (
                 <div key={index} style={{ margin: "20px 0px" }}>
                   <Link
-                    href={`/faculty/courses/student?courseId=${data?.course?.id}&offeredCourseSectionId=${el?.id}`}
+                    href={`/faculty/courses/student?courseId=${data?.course?.id}&courseTitle=${data?.course?.title}&courseSection=${el?.title}&offeredCourseSectionId=${el?.id}`}
                   >
                     <Button type="primary">View all students</Button>
                   </Link>

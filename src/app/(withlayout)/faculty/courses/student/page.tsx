@@ -10,16 +10,20 @@ import { useDebounced } from "@/redux/hooks";
 import UMTable from "@/components/ui/UMTable";
 import { IMeta } from "@/types";
 import { useFacultyCourseStudentsQuery } from "@/redux/api/facultyApi";
+import Link from "next/link";
 
 const FacultyCoursesStudentsPage = ({
   searchParams,
 }: {
   searchParams: {
     courseId: string;
+    courseTitle: string;
+    courseSection: string;
     offeredCourseSectionId: string;
   };
 }) => {
-  const { courseId, offeredCourseSectionId } = searchParams;
+  const { courseId, courseTitle, courseSection, offeredCourseSectionId } =
+    searchParams;
 
   // States
   const [page, setPage] = useState<number>(1);
@@ -56,8 +60,6 @@ const FacultyCoursesStudentsPage = ({
   // Getting all data
   const { data, isLoading } = useFacultyCourseStudentsQuery({ ...query });
 
-  console.log(data);
-
   const myCourseStudents = data?.myCourseStudents;
   const meta = data?.meta as IMeta;
 
@@ -88,9 +90,14 @@ const FacultyCoursesStudentsPage = ({
     {
       title: "Action",
       render: function (data: any) {
+        console.log(data);
         return (
           <div key="1" style={{ margin: "20px 0px" }}>
-            <Button type="primary">View Marks</Button>
+            <Link
+              href={`/faculty/student-result?studentId=${data.id}&courseId=${courseId}&courseTitle=${courseTitle}&courseSection=${courseSection}&offeredCourseSectionId=${offeredCourseSectionId}`}
+            >
+              <Button type="primary">View Marks</Button>
+            </Link>
           </div>
         );
       },
@@ -132,7 +139,10 @@ const FacultyCoursesStudentsPage = ({
           },
         ]}
       />
-      <ActionBar title="My Course Students">
+      <ActionBar
+        title={courseTitle}
+        subTitle={`Section ${courseSection} Students`}
+      >
         <Input
           size="large"
           placeholder="Search"

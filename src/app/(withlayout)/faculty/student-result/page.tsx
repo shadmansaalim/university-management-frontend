@@ -18,7 +18,20 @@ import {
 } from "@/redux/api/studentEnrolledCourseMarkApi";
 import { IStudentEnrolledCourseMark } from "@/types";
 
-const StudentResultPage = ({ searchParams }: Record<string, any>) => {
+type StudentResultPageProps = {
+  searchParams: {
+    studentId?: string;
+    courseId?: string;
+    courseTitle?: string;
+    courseSection?: string;
+    offeredCourseSectionId?: string;
+  };
+};
+
+
+const StudentResultPage = ({
+  searchParams,
+}: StudentResultPageProps) => {
   const [evaluateFinalGpa] = useEvaluateFinalGpaMutation();
   const [academicSemesterId, setAcademicSemesterId] = useState<string>();
 

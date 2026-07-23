@@ -8,14 +8,6 @@ RUN npm ci
 
 COPY . .
 
-ARG NEXT_PUBLIC_API_BASE_URL
-
-RUN echo "=================================="
-RUN echo "$NEXT_PUBLIC_API_BASE_URL"
-RUN echo "=================================="
-
-ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
-
 RUN npm run build
 
 EXPOSE 3000
